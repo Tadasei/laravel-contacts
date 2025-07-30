@@ -59,7 +59,7 @@ $contact = $customer->contacts()->create([
     'name' => 'John Doe',
 ]);
 
-$contact->methods()->create([
+$contact->contactMethods()->create([
     'type' => 'email',
     'value' => 'john@example.com',
 ]);
