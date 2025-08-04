@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\ContactableType;
+
 use Illuminate\Database\Eloquent\{
 	Factories\HasFactory,
 	Relations\HasMany,
 	Relations\MorphTo,
-	Model,
+	Model
 };
 
 class Contact extends Model
@@ -29,6 +31,8 @@ class Contact extends Model
 	protected function casts(): array
 	{
 		return [
+			"contactable_type" => ContactableType::class,
+
 			"details" => "array",
 		];
 	}

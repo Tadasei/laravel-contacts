@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\ContactMethodType;
 use Nnjeim\World\Models\Country;
 
 use Illuminate\Database\Eloquent\{
 	Factories\HasFactory,
 	Relations\BelongsTo,
-	Model,
+	Model
 };
 
 class ContactMethod extends Model
@@ -21,6 +22,18 @@ class ContactMethod extends Model
 	 * @var array<int, string>
 	 */
 	protected $fillable = ["country_id", "type", "value"];
+
+	/**
+	 * Get the attributes that should be cast.
+	 *
+	 * @return array<string, string>
+	 */
+	protected function casts(): array
+	{
+		return [
+			"type" => ContactMethodType::class,
+		];
+	}
 
 	/**
 	 * Get the contact that owns the contact method.
