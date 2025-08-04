@@ -8,7 +8,10 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use RuntimeException;
 
-use Symfony\Component\Process\{PhpExecutableFinder, Process};
+use Symfony\Component\Process\{
+	PhpExecutableFinder,
+	Process
+};
 
 class InstallCommand extends Command
 {
@@ -32,7 +35,20 @@ class InstallCommand extends Command
 	 */
 	public function handle()
 	{
-		$files = $this->listDirectoryFiles(__DIR__ . "/../../stubs");
+		// Publish the scaffolding files
+
+		$this->publishDirectory(__DIR__ . "/../../stubs");
+
+		// Notify of completion
+
+		$this->components->info("Scaffolding complete.");
+
+		return 0;
+	}
+
+	protected function publishDirectory(string $directory): void
+	{
+		$files = $this->listDirectoryFiles($directory);
 
 		// Ensuring target directories exist
 
@@ -41,12 +57,6 @@ class InstallCommand extends Command
 		// Copying files
 
 		$this->copyFiles($files);
-
-		// Notify of completion
-
-		$this->components->info("Scaffolding complete.");
-
-		return 0;
 	}
 
 	protected function copyFiles(array $files): void
