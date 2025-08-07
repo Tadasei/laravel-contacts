@@ -46,9 +46,16 @@ class InstallCommand extends Command
 		return 0;
 	}
 
-	protected function publishDirectory(string $directory): void
-	{
-		$files = $this->listDirectoryFiles($directory);
+	protected function publishDirectory(
+		string $directory,
+		?Closure $getTargetFilePath = null,
+		?string $prefix = null
+	): void {
+		$files = $this->listDirectoryFiles(
+			$directory,
+			$getTargetFilePath,
+			$prefix
+		);
 
 		// Ensuring target directories exist
 
