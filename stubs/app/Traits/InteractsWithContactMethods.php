@@ -2,21 +2,18 @@
 
 namespace App\Traits;
 
-use App\Models\{
-	Contact,
-	ContactMethod
-};
+use App\Models\Contact;
 
 trait InteractsWithContactMethods
 {
 	protected function syncContactMethods(
 		Contact $contact,
-		array $contactMethods,
+		array $contactMethods
 	): void {
 		[$existingContactMethods, $newContactMethods] = collect(
-			$contactMethods,
+			$contactMethods
 		)->partition(
-			fn(array $contactMethod) => key_exists("id", $contactMethod),
+			fn(array $contactMethod) => key_exists("id", $contactMethod)
 		);
 
 		$contact
@@ -25,11 +22,13 @@ trait InteractsWithContactMethods
 			->delete();
 
 		if ($existingContactMethods->isNotEmpty()) {
-			ContactMethod::upsert(
-				$existingContactMethods->all(),
-				["id"],
-				["type", "country_id", "value"],
-			);
+			$contact
+				->contactMethods()
+				->upsert(
+					$existingContactMethods->all(),
+					["id"],
+					["type", "country_id", "value"]
+				);
 		}
 
 		if ($newContactMethods->isNotEmpty()) {
