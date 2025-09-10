@@ -2,16 +2,13 @@
 
 namespace App\Rules;
 
+use App\Models\Country;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Fluent;
 use Illuminate\Validation\Rule;
-use Nnjeim\World\Models\Country;
 
-use App\Enums\{
-	ContactMethodType,
-	PhoneValueRegex
-};
+use App\Enums\{ContactMethodType, PhoneValueRegex};
 
 class NewContactMethod implements ValidationRule
 {
@@ -23,7 +20,7 @@ class NewContactMethod implements ValidationRule
 	public function validate(
 		string $attribute,
 		mixed $value,
-		Closure $fail,
+		Closure $fail
 	): void {
 		$validator = validator($value, $this->rules());
 
@@ -32,19 +29,19 @@ class NewContactMethod implements ValidationRule
 				"value",
 				["email"],
 				fn(Fluent $input) => $input->type ===
-					ContactMethodType::Email->value,
+					ContactMethodType::Email->value
 			)
 			->sometimes(
 				"value",
 				["url:http,https"],
 				fn(Fluent $input) => $input->type ===
-					ContactMethodType::Url->value,
+					ContactMethodType::Url->value
 			)
 			->sometimes(
 				"value",
 				["regex:" . PhoneValueRegex::Mobile->value . "i"],
 				fn(Fluent $input) => $input->type ===
-					ContactMethodType::Mobile->value,
+					ContactMethodType::Mobile->value
 			)
 			->sometimes(
 				"value",
@@ -52,14 +49,14 @@ class NewContactMethod implements ValidationRule
 				fn(Fluent $input) => in_array($input->type, [
 					ContactMethodType::Landline->value,
 					ContactMethodType::Fax->value,
-				]),
+				])
 			);
 
 		if ($validator->fails()) {
 			collect($validator->errors()->messages())->each(
 				fn(array $messages, string $field) => collect($messages)->each(
-					fn(string $message) => $fail("$attribute.$field", $message),
-				),
+					fn(string $message) => $fail("$attribute.$field", $message)
+				)
 			);
 		}
 	}

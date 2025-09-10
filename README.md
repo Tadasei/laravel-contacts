@@ -27,7 +27,7 @@ php artisan contacts:install
 
 ### Configuring The Country Model
 
-By default, this package uses the `Country` model from [nnjeim/world](https://github.com/nnjeim/world) to add phone code support for the following contact method types:
+This package references an `App\Models\Country` model and requires manual supply of its implementation to add phone code support through a `phone_code` attribute for the following contact method types:
 
 * `landline`
 * `mobile`

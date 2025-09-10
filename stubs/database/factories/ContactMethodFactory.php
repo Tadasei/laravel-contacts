@@ -2,14 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Nnjeim\World\Models\Country;
 
-use App\Enums\{
-	ContactMethodType,
-	PhoneValueRegex
-};
+use App\Enums\{ContactMethodType, PhoneValueRegex};
+use App\Models\{Contact, Country};
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactMethod>
@@ -80,7 +76,7 @@ class ContactMethodFactory extends Factory
 				"country_id" => null,
 
 				"value" => fake()->url(),
-			],
+			]
 		);
 	}
 
@@ -96,7 +92,7 @@ class ContactMethodFactory extends Factory
 				"country_id" => null,
 
 				"value" => fake()->email(),
-			],
+			]
 		);
 	}
 
@@ -112,7 +108,7 @@ class ContactMethodFactory extends Factory
 				"country_id" => Country::inRandomOrder()->first()->id,
 
 				"value" => fake()->regexify(PhoneValueRegex::Landline->value),
-			],
+			]
 		);
 	}
 
@@ -128,7 +124,7 @@ class ContactMethodFactory extends Factory
 				"country_id" => Country::inRandomOrder()->first()->id,
 
 				"value" => fake()->regexify(PhoneValueRegex::Mobile->value),
-			],
+			]
 		);
 	}
 
@@ -144,7 +140,7 @@ class ContactMethodFactory extends Factory
 				"country_id" => Country::inRandomOrder()->first()->id,
 
 				"value" => fake()->regexify(PhoneValueRegex::Landline->value),
-			],
+			]
 		);
 	}
 }

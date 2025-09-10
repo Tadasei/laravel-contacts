@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ContactMethodType;
-use Nnjeim\World\Models\Country;
+use App\Models\Country;
 
 use Illuminate\Database\Eloquent\{
 	Factories\HasFactory,
